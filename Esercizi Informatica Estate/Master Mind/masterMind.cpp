@@ -10,10 +10,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <math.h>
+
+#define LEN 4
+#define MAX_ATT 10
+
+void codeGen(int numSegreti[LEN])
+{
+	int i, numRand;
+
+	srand(time(0));
+
+	for (i = 0; i < LEN; i++)
+	{
+		numRand = rand() % 10;
+		numSegreti[i] = numRand;
+	}
+}
+
+void guess(int indNumeri[LEN])
+{
+	int i;
+	int tmpCode;
+
+	printf("Le cifre che puoi inserire sono: ");
+	for (i = 0; i < 10; i++)
+		printf("%d, ", i);
+
+	do
+	{
+		printf("\nInserisci le tue risposte: \n");
+		scanf("%d", tmpCode);
+	}
+	while(tmpCode > (pow(10,LEN)-1) || tmpCode < 0);
+
+	printf("\n");
+
+	for(int i = 0; i < LEN; i++)
+	{
+		indNumeri[(LEN-1)-1] = tmpCode % 10;
+		tmpCode /= 10;
+	}
+}
 
 int main(int argc, char const *argv[])
 {
-    /* code */
-    printf("CIAO A TUTTI");
-    return 0;
+	/* code */
+	int numSegreti[LEN];
+
+	codeGen(numSegreti);
+	return 0;
 }
