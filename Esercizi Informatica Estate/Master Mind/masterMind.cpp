@@ -43,13 +43,13 @@ void guess(int indNumeri[LEN])
 		printf("\nInserisci le tue risposte: \n");
 		scanf("%d", tmpCode);
 	}
-	while(tmpCode > (pow(10,LEN)-1) || tmpCode < 0);
+	while(tmpCode > (pow(10,LEN)-1) || tmpCode < 0); 
 
 	printf("\n");
 
 	for(int i = 0; i < LEN; i++)
 	{
-		indNumeri[(LEN-1)-1] = tmpCode % 10;
+		indNumeri[(LEN-1)-i] = tmpCode % 10; //serve per copiare i numeri in input dentro al vettore
 		tmpCode /= 10;
 	}
 }
