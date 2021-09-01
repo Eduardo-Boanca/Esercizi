@@ -25,15 +25,13 @@ typedef struct
 
 void linea()
 {
-	for(int i = 0; i < 75; i++)
+	for (int i = 0; i < 75; i++)
 		printf("-");
 }
 
 void codeGen(int numSegreti[LEN])
 {
 	int i, numRand;
-
-	srand(time(0));
 
 	for (i = 0; i < LEN; i++)
 	{
@@ -43,7 +41,7 @@ void codeGen(int numSegreti[LEN])
 	}
 }
 
-void guess(int indNumeri[LEN])
+void guess(int indNumeri[LEN], int *tentativi = 0)
 {
 	int i;
 	int tmpCode;
@@ -54,49 +52,52 @@ void guess(int indNumeri[LEN])
 
 	do
 	{
+		printf("\n\nTentativo numero: %d", *tentativi);
 		printf("\nInserisci le tue risposte: \n");
 		scanf("%d", &tmpCode);
-	}
-	while(tmpCode > (pow(10,LEN)-1) || tmpCode < 0); 
+	} while (tmpCode > (pow(10, LEN) - 1) || tmpCode < 0);
 
 	printf("\n");
 
-	for(int i = 0; i < LEN; i++)
+	for (int i = 0; i < LEN; i++)
 	{
-		indNumeri[(LEN-1)-i] = tmpCode % 10; //serve per copiare i numeri in input dentro al vettore
+		indNumeri[(LEN - 1) - i] = tmpCode % 10; //serve per copiare i numeri in input dentro al vettore
 		tmpCode /= 10;
 	}
 }
 
 void stampaVett(int vet[], int len)
 {
-	for(int i = 0; i < len; i++)
+	for (int i = 0; i < len; i++)
 		printf("%d", vet[i]);
 }
 
 void stampaRis(int indNumeri[], solutions soluzioni)
 {
+	char risp;
 	//stampaVett(indNumeri, LEN);
-	printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
+	do
+	{
+		printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
 
-	printf("\n");
-	printf("\n");
-	linea();
-	printf("\n");
-	printf("\n");
+		printf("\n");
+		printf("\n");
+		linea();
+		printf("\n");
+		printf("\n");
 
-	if(soluzioni.corretto == LEN)
-		printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
-
+		if (soluzioni.corretto == LEN)
+			printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
+			printf("\nVUOI CONTINUARE? (S/N)");
+			scanf("%c", &risp);
+	} while (risp == 'S');
 }
-
 
 void copiaArray(int vet1[], int vet2[])
 {
-	for(int i = 0; i < LEN; i++)
+	for (int i = 0; i < LEN; i++)
 		vet1[i] = vet2[i];
 }
-
 
 solutions verificaCodice(int indNumeri[], int numSegreti[])
 {
@@ -106,17 +107,17 @@ solutions verificaCodice(int indNumeri[], int numSegreti[])
 	soluzioni.quasiCorretto = 0;
 	bool checkUguale;
 
-	copiaArray(tmpCode,numSegreti);
-	
-	for(int i = 0; i < LEN; i++)
+	copiaArray(tmpCode, numSegreti);
+
+	for (int i = 0; i < LEN; i++)
 	{
 		checkUguale = false;
 
-		for(int j = 0; j < LEN && !checkUguale; j++)
+		for (int j = 0; j < LEN && !checkUguale; j++)
 		{
-			if(indNumeri[i] == tmpCode[j])
+			if (indNumeri[i] == tmpCode[j])
 			{
-				if(i==j)
+				if (i == j)
 					soluzioni.corretto++;
 				else
 					soluzioni.quasiCorretto++;
@@ -128,35 +129,52 @@ solutions verificaCodice(int indNumeri[], int numSegreti[])
 	}
 
 	return soluzioni;
-
 }
 
+void Benvenuto()
+{
+	printf("\n******************************************************************");
+	printf("\n		BENVENUTO AL GIOCO DEL MASTERMIND			");
+	printf("\n******************************************************************");
+}
 
 int main(int argc, char const *argv[])
 {
 	/* code */
+	srand(time(NULL));
 	int numSegreti[LEN], indNumeri[LEN], tentativi = 0;
+	char risp;
 	solutions soluzioni;
 
-	codeGen(numSegreti);
+	Benvenuto();
 
 	do
 	{
-		guess(indNumeri);
 
-		soluzioni = verificaCodice(indNumeri, numSegreti);
+		codeGen(numSegreti);
 
-		stampaRis(indNumeri, soluzioni);
+		do
+		{
+			guess(indNumeri, &tentativi);
+
+			soluzioni = verificaCodice(indNumeri, numSegreti);
+
+			stampaRis(indNumeri, soluzioni);
 			tentativi++;
+		} while (tentativi < MAX_ATT);
 
-	}
-	while(tentativi < MAX_ATT);
+		if (soluzioni.corretto < LEN)
+			printf("MI DISPIACE HAI PERSO...\n\n");
 
-	if(soluzioni.corretto < LEN)
-		printf("MI DISPIACE HAI PERSO...\n\n");
+		printf("La combinazione giusta era: ");
+		stampaVett(numSegreti, LEN);
 
-	printf("La combinazione giusta era: ");
-	stampaVett(numSegreti, LEN);
-	
+		printf("\nVUOI CONTINUARE? (S/N): ");
+		scanf("%c", &risp);
+
+	} while (risp == 'S');
+
+	printf("\nSEI USCITO DAL PROGRAMMA\n");
+
 	return 0;
 }
