@@ -99,6 +99,7 @@ void copiaArray(int vet1[], int vet2[])
 		vet1[i] = vet2[i];
 }
 
+
 solutions verificaCodice(int indNumeri[], int numSegreti[])
 {
 	int tmpCode[LEN];
