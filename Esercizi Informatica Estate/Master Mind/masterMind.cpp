@@ -11,10 +11,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <iostream>
 #include <math.h>
 
 #define LEN 4
 #define MAX_ATT 10
+
+typedef struct
+{
+	int corretto;
+	int quasiCorretto;
+} solutions;
+
+void linea()
+{
+	for(int i = 0; i < 75; i++)
+		printf("-");
+}
 
 void codeGen(int numSegreti[LEN])
 {
@@ -26,6 +39,7 @@ void codeGen(int numSegreti[LEN])
 	{
 		numRand = rand() % 10;
 		numSegreti[i] = numRand;
+		printf("%d", numSegreti[i]);
 	}
 }
 
@@ -41,7 +55,7 @@ void guess(int indNumeri[LEN])
 	do
 	{
 		printf("\nInserisci le tue risposte: \n");
-		scanf("%d", tmpCode);
+		scanf("%d", &tmpCode);
 	}
 	while(tmpCode > (pow(10,LEN)-1) || tmpCode < 0); 
 
@@ -54,11 +68,94 @@ void guess(int indNumeri[LEN])
 	}
 }
 
+void stampaVett(int vet[], int len)
+{
+	for(int i = 0; i < len; i++)
+		printf("%d", vet[i]);
+}
+
+void stampaRis(int indNumeri[], solutions soluzioni)
+{
+	stampaVett(indNumeri, LEN);
+	printf("%d cifre giuste nel posto giusto,     %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
+
+	printf("\n");
+	printf("\n");
+	linea();
+	printf("\n");
+	printf("\n");
+
+	if(soluzioni.corretto == LEN)
+		printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
+
+}
+
+
+void copiaArray(int vet1[], int vet2[])
+{
+	for(int i = 0; i < LEN; i++)
+		vet1[i] = vet2[i];
+}
+
+
+solutions verificaCodice(int indNumeri[], int numSegreti[])
+{
+	int tmpCode[LEN];
+	solutions soluzioni;
+	soluzioni.corretto = 0;
+	soluzioni.quasiCorretto = 0;
+	bool checkUguale;
+
+	copiaArray(tmpCode,numSegreti);
+	
+	for(int i = 0; i < LEN; i++)
+	{
+		checkUguale = false;
+
+		for(int j = 0; j < LEN && !checkUguale; j++)
+		{
+			if(indNumeri[i] == tmpCode[j])
+			{
+				if(i==j)
+					soluzioni.corretto++;
+				else
+					soluzioni.quasiCorretto++;
+
+				checkUguale = true;
+				tmpCode[j] = -1;
+			}
+		}
+	}
+
+	return soluzioni;
+
+}
+
+
 int main(int argc, char const *argv[])
 {
 	/* code */
-	int numSegreti[LEN];
+	int numSegreti[LEN], indNumeri[LEN], tentativi = 0;
+	solutions soluzioni;
 
 	codeGen(numSegreti);
+
+	do
+	{
+		guess(indNumeri);
+
+		soluzioni = verificaCodice(indNumeri, numSegreti);
+
+		stampaRis(indNumeri, soluzioni);
+			tentativi++;
+	}
+	while(tentativi < MAX_ATT);
+
+	if(soluzioni.corretto < LEN)
+		printf("MI DISPIACE HAI PERSO...\n\n");
+
+	printf("La combinazione giusta era: ");
+	stampaVett(numSegreti, LEN);
+	
 	return 0;
 }
