@@ -39,7 +39,7 @@ void codeGen(int numSegreti[LEN])
 	{
 		numRand = rand() % 10;
 		numSegreti[i] = numRand;
-		printf("%d", numSegreti[i]);
+		printf("\n%d", numSegreti[i]);
 	}
 }
 
@@ -76,8 +76,8 @@ void stampaVett(int vet[], int len)
 
 void stampaRis(int indNumeri[], solutions soluzioni)
 {
-	stampaVett(indNumeri, LEN);
-	printf("%d cifre giuste nel posto giusto,     %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
+	//stampaVett(indNumeri, LEN);
+	printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
 
 	printf("\n");
 	printf("\n");
@@ -148,6 +148,7 @@ int main(int argc, char const *argv[])
 
 		stampaRis(indNumeri, soluzioni);
 			tentativi++;
+
 	}
 	while(tentativi < MAX_ATT);
 
