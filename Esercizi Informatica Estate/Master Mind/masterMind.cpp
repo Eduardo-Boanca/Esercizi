@@ -105,20 +105,25 @@ viene stampato il messaggio di vittoria
 *		int: indNumeri[]: input: codice inserito da utente
 *		solutions soluzioni: indizi se le cifre sono nel posto giusto
 -----------------------------------------------------------------------*/
-void stampaRis(int indNumeri[], solutions soluzioni)
+bool stampaRis(int indNumeri[], solutions soluzioni)
 {
 	char risp;
 	//stampaVett(indNumeri, LEN);
-		printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
+	printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
 
-		printf("\n");
-		printf("\n");
-		linea();
-		printf("\n");
-		printf("\n");
+	printf("\n");
+	printf("\n");
+	linea();
+	printf("\n");
+	printf("\n");
 
-		if (soluzioni.corretto == LEN)
-			printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
+	if (soluzioni.corretto == LEN)
+	{
+		printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
+		return true;
+	}
+
+	return false;
 }
 
 /*----------------------------------------------------------------
@@ -200,9 +205,7 @@ int main(int argc, char const *argv[])
 	{
 
 		codeGen(numSegreti);
-	do
-	{
-			
+
 		do
 		{
 			guess(indNumeri, &tentativi);
@@ -211,16 +214,10 @@ int main(int argc, char const *argv[])
 
 			stampaRis(indNumeri, soluzioni);
 			tentativi++;
-		} while (tentativi < MAX_ATT || soluzioni.corretto == LEN);
-
-		printf("\nVUOI CONTINUARE? (S/N): ");
-		scanf("%c", &risp);
-
-	} while(risp == 'S');
+		} while (tentativi < MAX_ATT && !stampaRis(indNumeri, soluzioni));
 
 		if (soluzioni.corretto < LEN)
-		printf("MI DISPIACE HAI PERSO...\n\n");
-
+			printf("MI DISPIACE HAI PERSO...\n\n");
 
 		printf("La combinazione giusta era: ");
 		stampaVett(numSegreti, LEN);
