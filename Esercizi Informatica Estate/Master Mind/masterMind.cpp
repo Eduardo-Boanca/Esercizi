@@ -16,7 +16,9 @@
 
 #define LEN 4
 #define MAX_ATT 10
-
+/*------------------------------
+Definizione del tipo solutions
+-------------------------------*/
 typedef struct
 {
 	int corretto;
@@ -24,12 +26,20 @@ typedef struct
 
 } solutions;
 
+/*------------------------------
+Procedura che stampa una linea
+-------------------------------*/
 void linea()
 {
 	for (int i = 0; i < 75; i++)
 		printf("-");
 }
 
+/*--------------------------------------------------------
+Procedura che genera il codice segreto
+*	Parametri:
+*		int numSegreti[]: output: Contiene il codice segreto
+----------------------------------------------------------*/
 void codeGen(int numSegreti[LEN])
 {
 	int i, numRand;
@@ -42,7 +52,14 @@ void codeGen(int numSegreti[LEN])
 	}
 }
 
-void guess(int indNumeri[LEN], int *tentativi = 0)
+/*--------------------------------------------------------
+Procedura che chiede in input il codice all'interno ad una 
+variabile temporanea che poi verrà scomposta ed inserita 
+all'interno di un array
+*	Parametri:
+*		int indNumeri[]: output: Contiene il codice dell'utente
+----------------------------------------------------------*/
+void guess(int indNumeri[LEN], int *tentativi)
 {
 	int i;
 	int tmpCode;
@@ -67,12 +84,27 @@ void guess(int indNumeri[LEN], int *tentativi = 0)
 	}
 }
 
+/*----------------------------------------------------------------
+Procedura che stampa l'array passato come parametro
+* Parametri:
+*		int vet[]: input: array che sarà stampato
+*		int len: input: lunghezza dell'array
+----------------------------------------------------------------*/
+
 void stampaVett(int vet[], int len)
 {
 	for (int i = 0; i < len; i++)
 		printf("%d", vet[i]);
 }
 
+/*---------------------------------------------------------------------
+Procedura che stampa se le cifre sono al posto
+giusto oppure no, e in caso il numero venga indovinato
+viene stampato il messaggio di vittoria
+*	Parametri:
+*		int: indNumeri[]: input: codice inserito da utente
+*		solutions soluzioni: indizi se le cifre sono nel posto giusto
+-----------------------------------------------------------------------*/
 void stampaRis(int indNumeri[], solutions soluzioni)
 {
 	char risp;
@@ -89,13 +121,28 @@ void stampaRis(int indNumeri[], solutions soluzioni)
 			printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
 }
 
+/*----------------------------------------------------------------
+Procedura che copia il contenuto del secondo array nel primo
+*	Parametri:
+*		int vet1[]: input: array contenente la copia
+*		int vet2[]: input: array originario
+----------------------------------------------------------------*/
 void copiaArray(int vet1[], int vet2[])
 {
 	for (int i = 0; i < LEN; i++)
 		vet1[i] = vet2[i];
 }
 
-
+/*--------------------------------------------------------
+Funzione che esegue la comparazione dei due codici per
+vedere se ci sono differenze, e grazie a questo si possono
+ricevere le indicazioni sulle posizoni giuste o meno dei numeri
+*	Parametri:
+*		int indNumeri[]: input: codice inserito dall'utente
+*		int numSegreti[]: input: codice creato dal Programma
+*		return solutions: output: contiene le indicazioni se
+*			i numeri inseriti sono corretti o quasiCorretti
+--------------------------------------------------------*/
 solutions verificaCodice(int indNumeri[], int numSegreti[])
 {
 	int tmpCode[LEN];
@@ -128,6 +175,9 @@ solutions verificaCodice(int indNumeri[], int numSegreti[])
 	return soluzioni;
 }
 
+/*----------------------------------------------
+Procedura che stampa l'introduzione al programma
+----------------------------------------------*/
 void Benvenuto()
 {
 	printf("\n******************************************************************");
@@ -135,6 +185,7 @@ void Benvenuto()
 	printf("\n******************************************************************");
 }
 
+/*------MAIN------*/
 int main(int argc, char const *argv[])
 {
 	/* code */

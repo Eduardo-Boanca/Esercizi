@@ -3,10 +3,13 @@
     Programma che dice se la parola inserita da tastiera è palindroma,
     ovvero se è leggibile allo stesso modo da sinistra a destra e
     viceversa (es. OSSESSO)
+
+    VERSIONE AUTOMATICA TRAMITE USO DI FUNZIONE strrev()
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define LEN 10
 
 /*----------------------------------------------------------------
