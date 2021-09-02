@@ -21,6 +21,7 @@ typedef struct
 {
 	int corretto;
 	int quasiCorretto;
+
 } solutions;
 
 void linea()
@@ -37,7 +38,7 @@ void codeGen(int numSegreti[LEN])
 	{
 		numRand = rand() % 10;
 		numSegreti[i] = numRand;
-		printf("\n%d", numSegreti[i]);
+		printf("%d   ", numSegreti[i]);
 	}
 }
 
@@ -76,8 +77,6 @@ void stampaRis(int indNumeri[], solutions soluzioni)
 {
 	char risp;
 	//stampaVett(indNumeri, LEN);
-	do
-	{
 		printf("%d cifre giuste nel posto giusto,  %d cifre giuste nel posto sbagliato", soluzioni.corretto, soluzioni.quasiCorretto);
 
 		printf("\n");
@@ -88,9 +87,6 @@ void stampaRis(int indNumeri[], solutions soluzioni)
 
 		if (soluzioni.corretto == LEN)
 			printf("HAI INDOVINATO IL NUMERO! BRAVO!! \n\n");
-			printf("\nVUOI CONTINUARE? (S/N)");
-			scanf("%c", &risp);
-	} while (risp == 'S');
 }
 
 void copiaArray(int vet1[], int vet2[])
@@ -153,7 +149,9 @@ int main(int argc, char const *argv[])
 	{
 
 		codeGen(numSegreti);
-
+	do
+	{
+			
 		do
 		{
 			guess(indNumeri, &tentativi);
@@ -162,10 +160,16 @@ int main(int argc, char const *argv[])
 
 			stampaRis(indNumeri, soluzioni);
 			tentativi++;
-		} while (tentativi < MAX_ATT);
+		} while (tentativi < MAX_ATT || soluzioni.corretto == LEN);
+
+		printf("\nVUOI CONTINUARE? (S/N): ");
+		scanf("%c", &risp);
+
+	} while(risp == 'S');
 
 		if (soluzioni.corretto < LEN)
-			printf("MI DISPIACE HAI PERSO...\n\n");
+		printf("MI DISPIACE HAI PERSO...\n\n");
+
 
 		printf("La combinazione giusta era: ");
 		stampaVett(numSegreti, LEN);
@@ -175,7 +179,7 @@ int main(int argc, char const *argv[])
 
 	} while (risp == 'S');
 
-	printf("\nSEI USCITO DAL PROGRAMMA\n");
+	printf("\nSEI USCITO DAL GIOCO\n");
 
 	return 0;
 }
