@@ -12,29 +12,46 @@
 #include <iostream>
 #define LEN 20
 
+/*----------------------------------------------------------------
+Chiede in input la stringa inserendola nell'Array
+*    Parametri
+*        char parola[]: input: contiene la stringa
+----------------------------------------------------------------*/
 void input(char parola[])
 {
     printf("Inserisci la parola: ");
     gets(parola);
 }
 
+/*----------------------------------------------------------------
+Esegue il toupper della stringa inserita in input
+*    Parametri
+*        char parola[]: input/output: stringa maiuscola
+----------------------------------------------------------------*/
 void toupperParola(char parola[])
 {
     for (int i = 0; i < strlen(parola); i++)
         parola[i] = toupper(parola[i]);
 }
 
+/* ----------------------------------------------------------------
+Controlla se la stringa inserita in input è palindroma
+*    Parametri
+*        char parola[]: input: stringa da controllare
+*        return bool isPalindroma: return se la parola è palindroma o no
+-----------------------------------------------------------------*/
 bool checkPalind(char parola[])
 {
     toupperParola(parola);
-    bool checkPalind = true;
-    for (int i = 0; i < strlen(parola)/2 && checkPalind; i++)
-        if(parola[i] != parola[(strlen(parola)-1)-i])
-            checkPalind = false;
+    bool isPalindroma = true;
+    for (int i = 0; i < strlen(parola)/2 && isPalindroma; i++)
+        if(parola[i] != parola[(strlen(parola)-1)-i]) //compara se parola[i] è uguale a l'inverso (parola[(strelen(parola)-1)-i])
+            isPalindroma = false;
 
-    return checkPalind;
+    return isPalindroma;
 }
 
+/*-------MAIN-------*/
 int main(int argc, char const *argv[])
 {
     char parola[LEN];
