@@ -1,6 +1,8 @@
 /* 
     Eduardo Boanca 3^C Informatica
-
+    Realizzare un programma che, data una matrice di n righe ed m colonne, permetta di
+    visualizzare il massimo degli elementi di ciascuna riga, il minimo di tutti gli elementi della matrice
+    e la media di ciascuna colonna
 */
 
 #include <stdio.h>
