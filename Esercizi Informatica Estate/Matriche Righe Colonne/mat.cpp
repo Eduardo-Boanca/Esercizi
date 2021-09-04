@@ -9,6 +9,11 @@
 #define COL 5
 #define RIG 5
 
+/*----------------------------------------------------------------
+Carica la matrice con numeri casuali
+*    Parametri
+*        int mat[][COL]: output: matrice caricata con numeri casuali
+----------------------------------------------------------------*/
 void creaMatrice(int mat[][COL])
 {
     srand(time(0));
@@ -17,6 +22,12 @@ void creaMatrice(int mat[][COL])
         for(int j = 0; j < COL; j++)
             mat[i][j] = rand() % 100 + 1;
 }
+
+/*--------------------------------------------------------
+Stampa il valore massimo per ogni riga
+*    Parametri
+*        int mat[][COL]: input: matrice che da i valori di ogni riga
+--------------------------------------------------------*/
 
 void maxRiga(int mat[][COL])
 {
@@ -32,7 +43,12 @@ void maxRiga(int mat[][COL])
     }
 }
 
-int minMatrice(int mat[][COL])
+/*----------------------------------------------------------------
+Stampa il valore minimo di tutta la matrice
+*    Parametri
+*        int mat[][COL]: input matrice da cui prende il valore piu basso
+----------------------------------------------------------------*/
+void minMatrice(int mat[][COL])
 {
     int min = mat[0][0];
     for(int i = 0; i < RIG; i++)
@@ -40,10 +56,16 @@ int minMatrice(int mat[][COL])
         for(int j = 0; j < COL; j++)
             if(mat[i][j] < min)
                 min = mat[i][j];
+        printf("\nIl numero minimo della matrice e': %d\n", min);
     }
-    return min;
+
 }
 
+/*----------------------------------------------------------------
+Esegue e stampa la media dei numeri in colonna di ogni colonna
+*    Parametri
+*          int mat[][COL]: input: matrice dove esegue il calcolo della media
+----------------------------------------------------------------*/
 void mediaCol(int mat[][COL])
 {
     float somma = 0;
@@ -59,6 +81,11 @@ void mediaCol(int mat[][COL])
     }
 }
 
+/*----------------------------------------------------------------
+Stampa la matrice con i numeri casuali
+*    Parametri
+*        int mat[][COL]: output: matrice da stampare
+----------------------------------------------------------------*/
 void stampaMatrice(int mat[][COL])
 {
     for(int i = 0; i < RIG; i++)
@@ -70,6 +97,7 @@ void stampaMatrice(int mat[][COL])
     printf("\n\n");
 }
 
+/*=======MAIN=======*/
 int main(int argc, char const *argv[])
 {
     int mat[RIG][COL];
@@ -77,7 +105,7 @@ int main(int argc, char const *argv[])
     creaMatrice(mat);
     stampaMatrice(mat);
     maxRiga(mat);
-    printf("\nIl numero minimo della matrice e': %d\n", minMatrice(mat));
+    minMatrice(mat);
     printf("\n");
     mediaCol(mat);
 
